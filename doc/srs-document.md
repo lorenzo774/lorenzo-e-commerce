@@ -55,5 +55,3 @@ The user should see the <mark>purchase </mark> made with the list of items, the 
 
 
 
-
-

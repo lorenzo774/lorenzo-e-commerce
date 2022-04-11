@@ -6,7 +6,7 @@ const logger = require("morgan");
 const debug = require("debug")("models");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+const usersRouter = require("./routes/auth");
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/auth", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -46,30 +46,8 @@ const mongoDB = "mongodb://localhost:27017/lorenzo-e-commerce";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 // Connection with the db
 const db = mongoose.connection;
-debug(db);
 db.on("error", function () {
   debug("MongoDB connection error");
 });
-
-// Importing models
-const User = require("./models/user");
-const Category = require("./models/category");
-const Product = require("./models/product");
-const purchase = require("./models/purchase");
-const CartItem = require("./models/cartItem");
-const Purchase = require("./models/purchase");
-
-// Save the new user
-async function run() {
-  try {
-    const purchase = await Purchase.findById(
-      "625339f3bcaab8e704e74089"
-    ).populate("user");
-    debug(purchase);
-  } catch (error) {
-    debug(error.message);
-  }
-}
-run();
 
 module.exports = app;
