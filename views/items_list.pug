@@ -1,6 +1,8 @@
 extends layout 
 
-block content 
+block content
+    h1 Cart
     ul
         each item in items 
             li #{item.product.name} x#{item.quantity}
+    a(href="./cart/create") Add a new item

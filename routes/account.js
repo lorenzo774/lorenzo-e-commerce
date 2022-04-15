@@ -19,8 +19,6 @@ router.get("/:id", accountController.account_detail);
 
 // Get cart
 router.get("/:id/cart", cartController.cart_list);
-// Get
-router.get("/:id/cart/:itemId", cartController.cart_item_detail);
 // Create
 router.get("/:id/cart/create", cartController.item_create_get);
 router.post("/:id/cart/create", cartController.item_create_post);

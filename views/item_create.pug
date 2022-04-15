@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+    h1= title 
+    form(action="", method="post") 
+        label(for="product") Product:
+        select(type="select", name="product")
+            each product in products 
+                option(value=product._id) #{product.name}
+        br
+        br
+        label(for="quantity") Quantity:
+        input(type="number", name="quantity") 
+        br
+        br
+        button(type="submit") Add
