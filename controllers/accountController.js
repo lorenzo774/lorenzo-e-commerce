@@ -1,5 +1,8 @@
-const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
+const async = require("async");
+// Models
+const User = require("../models/user");
+const CartItem = require("../models/cartItem");
 
 // Get signin
 module.exports.signin_get = function (req, res, next) {
@@ -41,14 +44,29 @@ module.exports.signup_get = function (req, res, next) {
 module.exports.account_detail = function (req, res, next) {
   // Get id
   const { id } = req.params;
-  // Found the account
-  User.findById(id, function (err, foundUser) {
-    if (err) {
-      return next(err);
+  // Get user and cart items
+  async.parallel(
+    {
+      user: function (callback) {
+        User.findById(id).exec(callback);
+      },
+      cartItems: function (callback) {
+        CartItem.countDocuments({ user: id }).exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      // No errors
+      const { user, cartItems } = results;
+      res.render("account_detail", {
+        title: "Account",
+        user,
+        cartItems,
+      });
     }
-    // No errors
-    res.render("account_detail", { user: foundUser });
-  });
+  );
 };
 
 // Create a new account

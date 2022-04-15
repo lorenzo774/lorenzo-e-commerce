@@ -28,11 +28,11 @@ Every user has a cart where are stored <mark>cart items</mark> with the quantity
 
 The app should let the user add a new product.
 
-The user should see the <mark>purchase </mark> made with the list of items, the date of the purchase and the total price.  
+The user should see the <mark>purchase </mark> made with the list of items, the date of the purchase and the total price.
 
 ## 
 
-## ***Software Requirements***
+## **_Software Requirements_**
 
 | **N** | **Requirements**                                   | **Type**   | **Priority** |
 |:-----:|:--------------------------------------------------:|:----------:|:------------:|

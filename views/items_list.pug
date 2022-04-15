@@ -1,0 +1,6 @@
+extends layout 
+
+block content 
+    ul
+        each item in items 
+            li #{item.product.name} x#{item.quantity}
