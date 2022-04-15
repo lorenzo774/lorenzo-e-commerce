@@ -1,0 +1,13 @@
+extends layout 
+
+block content 
+    h1= title
+    hr
+    form(action="", method="post")
+        input(type="text", name="username" , placeholder="username", required=true)
+        br
+        input(type="text", name="email", placeholder="email", required=true)
+        br
+        input(type="password", name="password", placeholder="password", required=true)
+        br
+        button(type="submit") Signup

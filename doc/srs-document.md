@@ -34,10 +34,11 @@ The user should see the <mark>purchase </mark> made with the list of items, the 
 
 ## ***Software Requirements***
 
-| **N** | **Requirements**                            | **Type**   | **Priority** |
-|:-----:|:-------------------------------------------:|:----------:|:------------:|
-| 1     | Create the NoSQL db                         | technical  | 1            |
-| 2     | The user should see the list of products    | functional | 1            |
-| 3     | The user should search for a product        | functional | 1            |
-| 4     | The user sould create a new product         | functional | 1            |
-| 5     | The user sould upload an image for the pic. | functional | 2            |
+| **N** | **Requirements**                                   | **Type**   | **Priority** |
+|:-----:|:--------------------------------------------------:|:----------:|:------------:|
+| 1     | Create the NoSQL db                                | technical  | 1            |
+| 2     | The user should see the list of products           | functional | 1            |
+| 3     | The user should search for a product               | functional | 1            |
+| 4     | The user sould create a new product                | functional | 2            |
+| 5     | The user sould upload an image for the pic.        | functional | 3            |
+| 6     | The user sould add his phone number to the account | functional | 2            |

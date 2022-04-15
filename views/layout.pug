@@ -4,4 +4,17 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    div.flex-50
+      div
+        a(href="/")
+          h3 Home
+        hr
+        h3 Account
+        a(href='/account/signin') Sign in
+        br  
+        a(href='/account/signup') Sign up  
+        hr
+        h3 Products
+        a(href='/products/') View products
+      div
+        block content

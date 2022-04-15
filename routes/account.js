@@ -14,6 +14,9 @@ router.post("/signup", accountController.signup_post);
 router.get("/signin", accountController.signin_get);
 router.post("/signin", accountController.signin_post);
 
+// Get account info
+router.get("/:id", accountController.account_detail);
+
 // Get cart
 router.get("/:id/cart", cartController.cart_list);
 // Get

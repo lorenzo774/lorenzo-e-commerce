@@ -4,7 +4,8 @@ block content
     h1= title
     hr
     form(action="", method="post")
-        h3 Sign in to your account
-        input(type="text", placeholder="username")
-        input(type="password", placeholder="password")
+        input(type="text", name="username", placeholder="username")
+        br
+        input(type="password", name="password" , placeholder="password")
+        br
         button(type="submit") Sign in

@@ -1,7 +1,10 @@
 const Product = require("../models/product");
 
 // Get the list of products
-module.exports.product_list = function (req, res, next) {};
+module.exports.product_list = async function (req, res, next) {
+  const products = await Product.find();
+  res.render("product_list", { title: "Products", products });
+};
 
 // Get a single product by id
 module.exports.product_detail = function (req, res, next) {};
