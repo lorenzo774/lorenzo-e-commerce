@@ -1,0 +1,19 @@
+extends layout 
+
+block content 
+    h1 Add a new product 
+    hr
+    form(action="", method="post")
+        input(type="text", name="name", placeholder="name")
+        br
+        input(type="number", name="price", placeholder="price")
+        br
+        input(type="text", name="description", placeholder="description")
+        br
+        select(type="select", name="category")
+            each category in categories 
+                option(value=category._id) #{category.name}
+
+        br
+
+        button(type="submit") Add 

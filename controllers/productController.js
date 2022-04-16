@@ -1,6 +1,8 @@
 const Product = require("../models/product");
 const CartItem = require("../models/cartItem");
+const Category = require("../models/category");
 const async = require("async");
+const { body, validationResult } = require("express-validator");
 
 // Get the list of products
 module.exports.product_list = async function (req, res, next) {
@@ -36,7 +38,7 @@ module.exports.product_delete_post = function (req, res, next) {
         Product.findById(id).exec(callback);
       },
       cartItems: function (callback) {
-        CartItem.find({ product: id }).exec(callback);
+        CartItem.find({ product: id }).populate("user").exec(callback);
       },
     },
     // Function that will be called after the async functions
@@ -74,7 +76,29 @@ module.exports.product_update_get = function (req, res, next) {};
 module.exports.product_update_post = function (req, res, next) {};
 
 // Get product form page to create it
-module.exports.product_create_get = function (req, res, next) {};
+module.exports.product_create_get = function (req, res, next) {
+  Category.find({}).exec(function (err, categories) {
+    if (err) {
+      return next(err);
+    }
+    // No errors while querying the db
+    res.render("product_create", { title: "Add a new product", categories });
+  });
+};
 
 // Create a new product
-module.exports.product_create_post = function (req, res, next) {};
+module.exports.product_create_post = [
+  body("name", "Name must be valid").trim().isLength({ min: 3 }).escape(),
+  function (req, res, next) {
+    const { body } = req;
+    const newProduct = new Product({
+      ...body,
+    });
+    newProduct.save(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect(newProduct.url);
+    });
+  },
+];

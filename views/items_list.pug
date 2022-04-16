@@ -4,5 +4,10 @@ block content
     h1 Cart
     ul
         each item in items 
-            li #{item.product.name} x#{item.quantity}
+            li 
+                div.flex-50
+                    p #{item.product.name} x#{item.quantity}
+                    a(href=item.deleteUrl) 
+                        p Remove
+
     a(href="./cart/create") Add a new item

@@ -1,0 +1,8 @@
+extends layout 
+
+block content 
+    h1 #{user.username} are you sure to remove x#{item.quantity} #{item.product.name} from your cart?
+    form(action="", method="post")
+        button(type="submit") Yes 
+    form(action="../", method="get") 
+        button(type="submit") No 

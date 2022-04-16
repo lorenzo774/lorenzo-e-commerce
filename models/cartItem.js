@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const User = require("./user");
 
 // CartItem Schema
 const CartItemSchema = new Schema({
@@ -10,12 +9,8 @@ const CartItemSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
-CartItemSchema.virtual("url").get(function () {
-  let userUrl;
-  User.findById(this.user).exec(function (_, user) {
-    userUrl = user.url;
-  });
-  return `${userUrl}/cart/${this._id}`;
+CartItemSchema.virtual("deleteUrl").get(function () {
+  return `/account/${this.user._id}/cart/${this._id}/delete`;
 });
 
 module.exports = mongoose.model("CartItem", CartItemSchema);
