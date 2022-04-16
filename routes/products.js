@@ -11,7 +11,6 @@ router.get("/", productController.product_list);
 router.get("/:id", productController.product_detail);
 
 // Delete
-router.get("/:id/delete", productController.product_delete_get);
 router.post("/:id/delete", productController.product_delete_post);
 
 // Update

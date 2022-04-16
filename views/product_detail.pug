@@ -1,0 +1,17 @@
+extends layout 
+
+block content 
+    h1= product.name 
+    h3 #{product.price} €
+    form(action=deleteUrl, method="post")
+      button(name="product", value=product._id) Delete
+
+    if itemsToDelete 
+        h3 Delete the following items before attempting to delete the product 
+        
+        ul
+            each item in itemsToDelete
+                li
+                    a(href=item.url) ciao
+
+
