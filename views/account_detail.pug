@@ -6,6 +6,15 @@ block content
         h3 #{user.username}
         h4 #{user.email}
         h4 #{user.phone}
+        
+        //- Cart
         div.cart-thumbnail
             p Cart items: #{cartItems}
             a(href=`${user.url}/cart`) cart
+        
+        br
+
+        //- Purchase
+        div.purchase-thumbnail
+            p Orders: 0
+            a(href=`${user.url}/orders`) orders

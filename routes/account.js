@@ -4,8 +4,7 @@ const router = express.Router();
 // Controller
 const accountController = require("../controllers/accountController");
 const cartController = require("../controllers/cartController");
-const purchaseController = require("../controllers/purchaseController");
-const purchase = require("../models/purchase");
+const orderController = require("../controllers/orderController");
 
 // Sign up to the website
 router.get("/signup", accountController.signup_get);
@@ -31,14 +30,11 @@ router.post("/:id/cart/:itemId/delete", cartController.item_delete_post);
 
 // Purchase
 // Get list
-router.get("/:id/purchase", purchaseController.purchase_list);
+router.get("/:id/orders", orderController.order_list);
 // Get
-router.get(
-  "/:id/cart/purchase/:purchaseId",
-  purchaseController.purchase_detail
-);
+router.get("/:id/orders/:orderId", orderController.order_detail);
 // Create
-router.get("/:id/purchase/create", purchaseController.purchase_create_get);
-router.post("/:id/purchase/create", purchaseController.purchase_create_post);
+router.get("/:id/orders/create", orderController.order_create_get);
+router.post("/:id/orders/create", orderController.order_create_post);
 
 module.exports = router;

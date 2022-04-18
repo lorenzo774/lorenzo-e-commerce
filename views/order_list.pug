@@ -1,0 +1,11 @@
+extends layout 
+
+block content 
+    h1= title 
+    if orders.length
+        ul
+        each order in orders 
+            li 
+                a(href=order.url) #{order.date}
+    else 
+        h3 No Orders

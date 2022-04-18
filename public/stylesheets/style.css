@@ -17,3 +17,9 @@ a {
   padding: 10px;
   background-color: azure;
 }
+
+.purchase-thumbnail {
+  border: 1px solid black;
+  padding: 10px;
+  background-color: rgba(172, 255, 47, 0.517);
+}

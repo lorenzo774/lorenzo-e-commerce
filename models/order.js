@@ -2,15 +2,15 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 // Purchase Schema
-const PurchaseSchema = new Schema({
+const OrderSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   date: { type: Date, required: true },
   total_price: Number,
 });
 
 // Url virtual property
-PurchaseSchema.virtual("url").get(function () {
-  return `/purchase/${this._id}`;
+OrderSchema.virtual("url").get(function () {
+  return `/orders/${this._id}`;
 });
 
-module.exports = mongoose.model("Purchase", PurchaseSchema);
+module.exports = mongoose.model("Order", OrderSchema);

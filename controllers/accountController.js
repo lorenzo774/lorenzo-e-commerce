@@ -1,8 +1,10 @@
 const { body, validationResult } = require("express-validator");
 const async = require("async");
+
 // Models
 const User = require("../models/user");
 const CartItem = require("../models/cartItem");
+const Purchase = require("../models/order");
 
 // Get signin
 module.exports.signin_get = function (req, res, next) {
@@ -53,13 +55,15 @@ module.exports.account_detail = function (req, res, next) {
       cartItems: function (callback) {
         CartItem.countDocuments({ user: id }).exec(callback);
       },
+      purchases: function (callback) {
+        Purchase.countDocuments({ user: id }).exec(callback);
+      },
     },
-    function (err, results) {
+    function (err, { user, cartItems, purchases }) {
       if (err) {
         return next(err);
       }
       // No errors
-      const { user, cartItems } = results;
       res.render("account_detail", {
         title: "Account",
         user,
