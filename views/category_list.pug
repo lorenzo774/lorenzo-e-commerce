@@ -5,7 +5,10 @@ block content
     ul
         each category in categories
             li 
-                a(href=category.url) #{category.name}
+                div.flex-50
+                    p #{category.name}
+                    form(action=category.deleteUrl, method="post") 
+                        button(type="submit") Remove 
         else 
             li Not found
     a(href="/categories/create") Add a new category

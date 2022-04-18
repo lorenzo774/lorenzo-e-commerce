@@ -14,7 +14,7 @@ The Lorenzo-e-commerce app is an e-commerce app created with the following techn
 
 - MongoDB
 
-## 
+##
 
 ## Description
 
@@ -30,15 +30,16 @@ The app should let the user add a new product.
 
 The user should see the <mark>purchase </mark> made with the list of items, the date of the purchase and the total price.
 
-## 
+##
 
 ## **_Software Requirements_**
 
-| **N** | **Requirements**                                   | **Type**   | **Priority** |
-|:-----:|:--------------------------------------------------:|:----------:|:------------:|
-| 1     | Create the NoSQL db                                | technical  | 1            |
-| 2     | The user should see the list of products           | functional | 1            |
-| 3     | The user should search for a product               | functional | 1            |
-| 4     | The user sould create a new product                | functional | 2            |
-| 5     | The user sould upload an image for the pic.        | functional | 3            |
-| 6     | The user sould add his phone number to the account | functional | 2            |
+| **N** |                                    **Requirements**                                    |    **Type**    | **Priority** |
+| :---: | :------------------------------------------------------------------------------------: | :------------: | :----------: |
+|   1   |                                  Create the NoSQL db                                   |   technical    |      1       |
+|   2   |                        The user should see the list of products                        |   functional   |      1       |
+|   3   |                          The user should search for a product                          |   functional   |      1       |
+|   4   |                          The user should create a new product                          |   functional   |      2       |
+|   5   |                      The user should upload an image for the pic.                      |   functional   |      3       |
+|   6   |                  The user should add his phone number to the account                   |   functional   |      2       |
+|   7   | When the user click on a category, the link must send the user to a search by category | Non-functional |      2       |

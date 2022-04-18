@@ -1,5 +1,8 @@
-const Category = require("../models/category");
+const async = require("async");
 const { body, validationResult } = require("express-validator");
+
+const Category = require("../models/category");
+const Product = require("../models/product");
 
 // Get the list
 module.exports.category_list = async function (req, res, next) {
@@ -40,3 +43,43 @@ module.exports.category_create_post = [
     });
   },
 ];
+
+// Delete
+module.exports.category_delete_post = function (req, res, next) {
+  const { id } = req.params;
+  async.parallel(
+    {
+      products: function (callback) {
+        Product.find({ category: id }).exec(callback);
+      },
+      category: function (callback) {
+        Category.findById(id).exec(callback);
+      },
+    },
+    // After the queries
+    function (err, { products, category }) {
+      if (err) {
+        return next(err);
+      }
+      if (!category) {
+        res.send("Category not found");
+      }
+      // Products found
+      if (products.length) {
+        res.render("category_delete", {
+          title: `Before removing ${category.name}...`,
+          category,
+          products,
+        });
+        return next("You can't remove this category");
+      }
+      // No products found
+      Category.findByIdAndDelete(id, function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect("/categories");
+      });
+    }
+  );
+};

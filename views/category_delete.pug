@@ -1,0 +1,9 @@
+extends layout 
+
+block content 
+    h1 You need to remove the following products before attempting to remove the category: 
+        b #{category.name} 
+
+    each product in products 
+        li 
+            a(href=product.url) #{product.name}

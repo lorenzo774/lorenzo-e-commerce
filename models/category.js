@@ -9,8 +9,8 @@ const CategorySchema = new Schema({
 });
 
 // URL virtual property
-CategorySchema.virtual("url").get(function () {
-  return `/category/${this._id}`;
+CategorySchema.virtual("deleteUrl").get(function () {
+  return `/categories/${this._id}/delete`;
 });
 
 module.exports = mongoose.model("Category", CategorySchema);

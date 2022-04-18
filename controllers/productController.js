@@ -51,7 +51,7 @@ module.exports.product_delete_post = function (req, res, next) {
       if (!product) {
         return next("Product not found");
       }
-      if (cartItems) {
+      if (cartItems.length) {
         res.render("product_detail", {
           title: `Unable to delete: ${product.name}`,
           product: product,
