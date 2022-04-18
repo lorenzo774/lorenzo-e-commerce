@@ -14,19 +14,21 @@ module.exports.product_list = async function (req, res, next) {
 module.exports.product_detail = function (req, res, next) {
   const { id } = req.params;
 
-  Product.findById(id).exec(function (err, product) {
-    if (err) {
-      return next(err);
-    }
-    if (!product) {
-      return next("Product not found");
-    }
-    res.render("product_detail", {
-      title: `Product: ${product.name}`,
-      product,
-      deleteUrl: `${product.url}/delete`,
+  Product.findById(id)
+    .populate("category")
+    .exec(function (err, product) {
+      if (err) {
+        return next(err);
+      }
+      if (!product) {
+        return next("Product not found");
+      }
+      res.render("product_detail", {
+        title: `Product: ${product.name}`,
+        product,
+        deleteUrl: `${product.url}/delete`,
+      });
     });
-  });
 };
 
 // Delete product

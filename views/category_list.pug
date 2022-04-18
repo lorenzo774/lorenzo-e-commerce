@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    h1 Categories 
+    ul
+        each category in categories
+            li 
+                a(href=category.url) #{category.name}
+        else 
+            li Not found
+    a(href="/categories/create") Add a new category
+

@@ -1,0 +1,10 @@
+extends layout 
+
+block content 
+    h1= title 
+    form(action="", method="post")
+        input(type="text", name="name", placeholder="Name", required=true)
+        br
+        input(type="text", name="description", placeholder="Description", required=true)
+        br
+        button(type="submit") Add

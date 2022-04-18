@@ -3,6 +3,7 @@ extends layout
 block content 
     h1= product.name 
     h3 #{product.price} €
+    h3 Category: #{product.category.name}
     form(action=deleteUrl, method="post")
       button(name="product", value=product._id) Delete
 
