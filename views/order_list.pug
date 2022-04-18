@@ -6,6 +6,6 @@ block content
         ul
         each order in orders 
             li 
-                a(href=order.url) #{order.date}
+                a(href=order.url) Order of #{order.localeDate}
     else 
         h3 No Orders

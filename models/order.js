@@ -1,3 +1,4 @@
+const { fromJSTimeToLocale } = require("../helper");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
@@ -10,7 +11,11 @@ const OrderSchema = new Schema({
 
 // Url virtual property
 OrderSchema.virtual("url").get(function () {
-  return `/orders/${this._id}`;
+  return `/account/${this.user}/orders/${this._id}`;
+});
+
+OrderSchema.virtual("localeDate").get(function () {
+  return fromJSTimeToLocale(this.date);
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

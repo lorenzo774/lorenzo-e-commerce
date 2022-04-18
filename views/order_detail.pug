@@ -1,0 +1,8 @@
+extends layout 
+
+block content 
+    h1= title 
+    ul
+        each item in items 
+            li 
+                p #{item.product.name} x#{item.quantity} #{item.product.price}

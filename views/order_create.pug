@@ -1,0 +1,13 @@
+extends layout 
+
+block content 
+    h1= title 
+
+    h3 By #{user.username}
+    ul
+        each item in items 
+            li 
+                p #{item.product.name} x#{item.quantity}
+            
+    form(action="", method="post")
+        button(type="submit") Place 

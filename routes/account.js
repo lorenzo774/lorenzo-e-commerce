@@ -31,10 +31,10 @@ router.post("/:id/cart/:itemId/delete", cartController.item_delete_post);
 // Purchase
 // Get list
 router.get("/:id/orders", orderController.order_list);
-// Get
-router.get("/:id/orders/:orderId", orderController.order_detail);
 // Create
 router.get("/:id/orders/create", orderController.order_create_get);
 router.post("/:id/orders/create", orderController.order_create_post);
+// Get
+router.get("/:id/orders/:orderId", orderController.order_detail);
 
 module.exports = router;
