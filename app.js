@@ -4,6 +4,8 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const debug = require("debug")("models");
+const dotenv = require("dotenv");
+dotenv.config();
 
 // Ruoters
 const indexRouter = require("./routes/index");
@@ -47,9 +49,11 @@ app.use(function (err, req, res, next) {
 
 // Test models
 const mongoose = require("mongoose");
-const mongoDB = "mongodb://localhost:27017/lorenzo-e-commerce";
 // Create the connection
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 // Connection with the db
 const db = mongoose.connection;
 db.on("error", function () {
