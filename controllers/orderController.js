@@ -38,7 +38,7 @@ module.exports.order_detail = function (req, res, next) {
   async.parallel(
     {
       items: function (callback) {
-        CartItem.find({ order: id }).populate("product").exec(callback);
+        CartItem.find({ order: orderId }).populate("product").exec(callback);
       },
       order: function (callback) {
         Order.findById(orderId).exec(callback);
@@ -106,19 +106,15 @@ module.exports.order_create_post = function (req, res, next) {
         return next(err);
       }
       // Update the items
-      items.forEach(async (item) => {
-        CartItem.findByIdAndUpdate(
-          item._id,
-          new CartItem({
-            product: item.product,
-            quantity: item.quantity,
-            order: newOrder._id,
-            user: undefined,
-          })
-        );
+      CartItem.updateMany(
+        { user: id },
+        { $unset: { user: 1 }, $set: { order: newOrder._id } }
+      ).exec(function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect(newOrder.url);
       });
-      // No errors while saving the order
-      res.redirect(newOrder.url);
     });
   });
 };

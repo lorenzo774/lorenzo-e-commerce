@@ -4,7 +4,7 @@ const async = require("async");
 // Models
 const User = require("../models/user");
 const CartItem = require("../models/cartItem");
-const Purchase = require("../models/order");
+const Order = require("../models/order");
 
 // Get signin
 module.exports.signin_get = function (req, res, next) {
@@ -55,11 +55,11 @@ module.exports.account_detail = function (req, res, next) {
       cartItems: function (callback) {
         CartItem.countDocuments({ user: id }).exec(callback);
       },
-      purchases: function (callback) {
-        Purchase.countDocuments({ user: id }).exec(callback);
+      orders: function (callback) {
+        Order.countDocuments({ user: id }).exec(callback);
       },
     },
-    function (err, { user, cartItems, purchases }) {
+    function (err, { user, cartItems, orders }) {
       if (err) {
         return next(err);
       }
@@ -68,6 +68,7 @@ module.exports.account_detail = function (req, res, next) {
         title: "Account",
         user,
         cartItems,
+        orders,
       });
     }
   );
