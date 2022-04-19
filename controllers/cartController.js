@@ -90,6 +90,6 @@ module.exports.item_delete_post = function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.redirect("../");
+    res.redirect("../..");
   });
 };
