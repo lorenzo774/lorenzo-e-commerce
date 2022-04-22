@@ -1,10 +1,41 @@
 const { body, validationResult } = require("express-validator");
 const async = require("async");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
 // Models
 const User = require("../models/user");
 const CartItem = require("../models/cartItem");
 const Order = require("../models/order");
+
+// Serialize and deserialize
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      if (user.password !== password) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      console.log(username);
+      return done(null, user);
+    });
+  })
+);
 
 // Get signin
 module.exports.signin_get = function (req, res, next) {
@@ -26,15 +57,21 @@ module.exports.signin_post = [
     if (!errors.isEmpty()) {
       return next(errors);
     }
-    const { username, password } = req.body;
-    // No errors
-    User.findOne({ username, password }, function (err, user) {
-      if (err) {
-        return next(err);
-      }
-      res.redirect(user.url);
-    });
+    next();
   },
+
+  passport.authenticate("local", {
+    failureRedirect: "/",
+    successRedirect: "/account",
+  }),
+
+  // Authenticate
+
+  // User.findOne({ username, password }, function (err, user) {
+  //   if (err) {
+  //     return next(err);
+  //   }
+  // });
 ];
 
 // Get signup
@@ -45,18 +82,18 @@ module.exports.signup_get = function (req, res, next) {
 // Account detail
 module.exports.account_detail = function (req, res, next) {
   // Get id
-  const { id } = req.params;
+  const { _id } = req.user;
   // Get user and cart items
   async.parallel(
     {
       user: function (callback) {
-        User.findById(id).exec(callback);
+        User.findById(_id).exec(callback);
       },
       cartItems: function (callback) {
-        CartItem.countDocuments({ user: id }).exec(callback);
+        CartItem.countDocuments({ user: _id }).exec(callback);
       },
       orders: function (callback) {
-        Order.countDocuments({ user: id }).exec(callback);
+        Order.countDocuments({ user: _id }).exec(callback);
       },
     },
     function (err, { user, cartItems, orders }) {

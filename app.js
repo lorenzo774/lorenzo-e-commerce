@@ -6,6 +6,9 @@ const logger = require("morgan");
 const debug = require("debug")("models");
 const dotenv = require("dotenv");
 dotenv.config();
+// Set up passportjs, session and LocalStrategy
+const passport = require("passport");
+const session = require("express-session");
 
 // Ruoters
 const indexRouter = require("./routes/index");
@@ -18,6 +21,20 @@ const app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+
+// Passport setup
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
+// Set the locals of the currentUser
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+
+const User = require("./models/user");
 
 app.enable("strict routing");
 app.use(logger("dev"));

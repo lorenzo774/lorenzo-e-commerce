@@ -4,8 +4,9 @@ block content
     h1= product.name 
     h3 #{product.price} €
     h3 Category: #{product.category.name}
+
     form(action=deleteUrl, method="post")
-      button(name="product", value=product._id) Delete
+        button(name="product", value=product._id) Delete
 
     if itemsToDelete 
         h3 Delete the following items before attempting to delete the product 
@@ -14,5 +15,3 @@ block content
             each item in itemsToDelete
                 li
                     a(href=item.deleteUrl) #{item.user.username} x#{item.quantity}
-
-
