@@ -8,13 +8,16 @@ const dotenv = require("dotenv");
 dotenv.config();
 // Set up passportjs, session and LocalStrategy
 const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 // Ruoters
 const indexRouter = require("./routes/index");
 const accountRuoter = require("./routes/account");
 const productRouter = require("./routes/products");
 const categoryRouter = require("./routes/category");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -22,11 +25,64 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+// Mongoose
+const mongoose = require("mongoose");
+// Create the connection
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+// Connection with the db
+const db = mongoose.connection;
+db.on("error", function () {
+  debug("MongoDB connection error");
+});
+
 // Passport setup
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(
+  session({
+    secret: "prova",
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL }),
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      // Check the password for the user
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (res) {
+          // passwords match! log user in
+          return done(null, user);
+        } else {
+          // passwords do not match!
+          return done(null, false, { message: "Incorrect password" });
+        }
+      });
+    });
+  })
+);
+
+// Serialize and deserialize
+passport.serializeUser(function (user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
 
 // Set the locals of the currentUser
 app.use(function (req, res, next) {
@@ -62,19 +118,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
-});
-
-// Test models
-const mongoose = require("mongoose");
-// Create the connection
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-// Connection with the db
-const db = mongoose.connection;
-db.on("error", function () {
-  debug("MongoDB connection error");
 });
 
 module.exports = app;

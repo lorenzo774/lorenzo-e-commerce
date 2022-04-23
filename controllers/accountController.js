@@ -1,41 +1,12 @@
 const { body, validationResult } = require("express-validator");
 const async = require("async");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
 
 // Models
 const User = require("../models/user");
 const CartItem = require("../models/cartItem");
 const Order = require("../models/order");
-
-// Serialize and deserialize
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
-
-passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      }
-      if (user.password !== password) {
-        return done(null, false, { message: "Incorrect password" });
-      }
-      console.log(username);
-      return done(null, user);
-    });
-  })
-);
 
 // Get signin
 module.exports.signin_get = function (req, res, next) {
@@ -124,17 +95,28 @@ module.exports.signup_post = [
     if (!errors.isEmpty()) {
       return next(err);
     }
-    // Create a new user
-    const newUser = new User({
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email,
-    });
-    newUser.save(function (err) {
+    // Crypt password
+    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
       if (err) {
         return next(err);
       }
-      res.redirect(newUser.url);
+      // Create a new user
+      const newUser = new User({
+        username: req.body.username,
+        password: hashedPassword,
+        email: req.body.email,
+      });
+      newUser.save(function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect("/account/signin");
+      });
     });
   },
 ];
+
+module.exports.log_out = function (req, res, next) {
+  req.logout();
+  res.redirect("/");
+};

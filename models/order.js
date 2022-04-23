@@ -11,7 +11,7 @@ const OrderSchema = new Schema({
 
 // Url virtual property
 OrderSchema.virtual("url").get(function () {
-  return `/account/${this.user}/orders/${this._id}`;
+  return `/account/orders/${this._id}`;
 });
 
 OrderSchema.virtual("localeDate").get(function () {

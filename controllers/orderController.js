@@ -7,14 +7,14 @@ const { DateTime } = require("luxon");
 
 // Get list of order
 module.exports.order_list = function (req, res, next) {
-  const { id } = req.params;
+  const { _id } = req.user;
   async.parallel(
     {
       orders: function (callback) {
-        Order.find({ user: id }).exec(callback);
+        Order.find({ user: _id }).exec(callback);
       },
       user: function (callback) {
-        User.findById(id).exec(callback);
+        User.findById(_id).exec(callback);
       },
     },
     function (err, { orders, user }) {
@@ -34,7 +34,8 @@ module.exports.order_list = function (req, res, next) {
 
 // Get detail about a order
 module.exports.order_detail = function (req, res, next) {
-  const { id, orderId } = req.params;
+  const { orderId } = req.params;
+  const { _id } = req.user;
   async.parallel(
     {
       items: function (callback) {
@@ -59,14 +60,14 @@ module.exports.order_detail = function (req, res, next) {
 
 // Get create order page
 module.exports.order_create_get = function (req, res, next) {
-  const { id } = req.params;
+  const { _id } = req.user;
   async.parallel(
     {
       items: function (callback) {
-        CartItem.find({ user: id }).populate("product").exec(callback);
+        CartItem.find({ user: _id }).populate("product").exec(callback);
       },
       user: function (callback) {
-        User.findById(id).exec(callback);
+        User.findById(_id).exec(callback);
       },
       // After the queries
     },
@@ -87,8 +88,8 @@ module.exports.order_create_get = function (req, res, next) {
 
 // Create a new order
 module.exports.order_create_post = function (req, res, next) {
-  const { id } = req.params;
-  CartItem.find({ user: id }).exec(function (err, items) {
+  const { _id } = req.user;
+  CartItem.find({ user: _id }).exec(function (err, items) {
     if (err) {
       return next(err);
     }
@@ -97,7 +98,7 @@ module.exports.order_create_post = function (req, res, next) {
     }
     // No errors
     const newOrder = new Order({
-      user: id,
+      user: _id,
       date: DateTime.now(),
     });
     // Save the order
@@ -107,7 +108,7 @@ module.exports.order_create_post = function (req, res, next) {
       }
       // Update the items
       CartItem.updateMany(
-        { user: id },
+        { user: _id },
         { $unset: { user: 1 }, $set: { order: newOrder._id } }
       ).exec(function (err) {
         if (err) {

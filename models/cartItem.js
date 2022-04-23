@@ -10,7 +10,7 @@ const CartItemSchema = new Schema({
 });
 
 CartItemSchema.virtual("deleteUrl").get(function () {
-  return `/account/${this.user._id}/cart/${this._id}/delete`;
+  return `/account/cart/${this._id}/delete`;
 });
 
 module.exports = mongoose.model("CartItem", CartItemSchema);
