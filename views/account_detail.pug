@@ -9,6 +9,10 @@ block content
         if user.phone
             p Phone: #{user.phone}
         
+        //- If the user has a pic
+        if user.pic 
+            img.w-25(src=user.pic)
+
         hr
         p.display-3 Details
 

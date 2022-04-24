@@ -3,7 +3,7 @@ extends layout
 block content 
     h1= title
     hr
-    form(action="", method="post")
+    form(action="", method="post", enctype="multipart/form-data")
         label(for="first_name") First name
         input.form-control(type="text", name="first_name" , placeholder="First name", required=true)
         br
@@ -16,4 +16,7 @@ block content
         label(for="password") Password
         input.form-control(type="password", name="password", placeholder="password", required=true)
         br
-        button.btn.btn-primary(type="submit") Signup
+        label(for="profilePicture") Profile picture
+        input.form-control.upload(type="file", name="profilePicture")
+        br
+        button.btn.btn-primary(type="submit") Sign up
