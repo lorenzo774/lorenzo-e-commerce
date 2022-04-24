@@ -1,25 +1,20 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+p {
+  font-size: 2rem;
 }
 
 a {
   color: #00b7ff;
+  font-size: 2rem;
 }
 
-.flex-50 {
-  display: flex;
-  gap: 50px;
+.content-div {
+  width: 30rem;
 }
 
-.cart-thumbnail {
-  border: 1px solid black;
-  padding: 10px;
-  background-color: azure;
-}
-
-.purchase-thumbnail {
-  border: 1px solid black;
-  padding: 10px;
-  background-color: rgba(172, 255, 47, 0.517);
+ul {
+  list-style-type: none;
 }

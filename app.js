@@ -41,7 +41,7 @@ db.on("error", function () {
 // Passport setup
 app.use(
   session({
-    secret: "prova",
+    secret: process.env.SESSION_SECRET,
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL }),
     resave: true,
     saveUninitialized: true,

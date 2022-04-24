@@ -7,6 +7,11 @@ const { DateTime } = require("luxon");
 
 // Get list of order
 module.exports.order_list = function (req, res, next) {
+  // If there is no current session
+  if (!req.user) {
+    res.redirect("/account/signin");
+  }
+  // Get order list
   const { _id } = req.user;
   async.parallel(
     {

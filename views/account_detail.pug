@@ -1,20 +1,26 @@
 extends layout 
 
 block content 
-    h1 Welcome #{user.username}!
+    p.display-3 Welcome #{user.username}!
     div 
-        h3 #{user.username}
-        h4 #{user.email}
-        h4 #{user.phone}
+        p Username: #{user.username}
+        p Email: #{user.email}
         
-        //- Cart
-        div.cart-thumbnail
-            p Cart items: #{cartItems}
-            a(href="/account/cart") cart
+        //- If the user has a phone...
+        if user.phone
+            p Phone: #{user.phone}
         
-        br
+        hr
+        p.display-3 Details
 
-        //- Purchase
-        div.purchase-thumbnail
-            p Orders: #{orders}
-            a(href="/account/orders") orders
+        .d-flex.justify-content-around
+
+            //- Cart
+            div
+                p Cart items: #{cartItems} 
+                    a(href="/account/cart") ...
+
+            //- Purchase
+            div
+                p Orders: #{orders} 
+                    a(href="/account/orders") ...

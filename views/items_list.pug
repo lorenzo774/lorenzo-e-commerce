@@ -1,15 +1,22 @@
 extends layout 
 
 block content
-    h1 Cart
+    p.display-3 Cart
     ul
         each item in items 
             li 
-                div.flex-50
-                    p #{item.product.name} x#{item.quantity}
-                    a(href=item.deleteUrl) 
-                        p Remove
+                div.card.p-4.d-flex.my-3
+                    p #{item.product.name} x#{item.quantity} 
+                    a.btn.btn-danger(href=item.deleteUrl) Remove
 
-    a(href="./cart/create") Add a new item
-    br
-    a(href="./orders/create") Place an order
+
+    //- Buttons
+    .text-center.mt-5
+        a.btn.btn-primary.w-100(href="/account/cart/create") Add a new item
+
+        br
+
+        //- If there is at least 1 item, you can create an order
+        if items.length
+            br
+            a.btn.btn-success.w-100(href="/account/orders/create") Place an order
