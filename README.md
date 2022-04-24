@@ -18,8 +18,8 @@ Now Create a .env file and add the following variables:
 - Session secret
 
 ```bash
-MONGODB_URL = "mongodb://localhost:27017/lorenzo-e-commerce";
-SESSION_SECRET = "banana";
+MONGODB_URL = "mongodb://localhost:27017/lorenzo-e-commerce"
+SESSION_SECRET = "banana"
 ```
 
 Now you are ready to run the app with nodemon:
