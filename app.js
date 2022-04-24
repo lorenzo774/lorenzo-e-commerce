@@ -51,26 +51,34 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      }
-      // Check the password for the user
-      bcrypt.compare(password, user.password, (err, res) => {
-        if (res) {
-          // passwords match! log user in
-          return done(null, user);
-        } else {
-          // passwords do not match!
-          return done(null, false, { message: "Incorrect password" });
+  new LocalStrategy(
+    // Change the default 'username' body field to 'email'
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    (req, email, password, done) => {
+      User.findOne({ email: email }, (err, user) => {
+        if (err) {
+          return done(err);
         }
+        if (!user) {
+          return done(null, false, { message: "Incorrect email" });
+        }
+        // Check the password for the user
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (res) {
+            // passwords match! log user in
+            return done(null, user);
+          } else {
+            // passwords do not match!
+            return done(null, false, { message: "Incorrect password" });
+          }
+        });
       });
-    });
-  })
+    }
+  )
 );
 
 // Serialize and deserialize

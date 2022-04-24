@@ -1,9 +1,8 @@
 extends layout 
 
 block content 
-    p.display-3 Welcome #{user.username}!
+    p.display-3 Welcome #{user.fullname}!
     div 
-        p Username: #{user.username}
         p Email: #{user.email}
         
         //- If the user has a phone...

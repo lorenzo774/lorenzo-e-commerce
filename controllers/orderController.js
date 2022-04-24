@@ -30,7 +30,7 @@ module.exports.order_list = function (req, res, next) {
         return next(err);
       }
       res.render("order_list", {
-        title: `Orders of ${user.username}`,
+        title: `Orders of ${user.fullname}`,
         orders,
       });
     }

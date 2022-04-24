@@ -16,17 +16,14 @@ module.exports.signin_get = function (req, res, next) {
 // Post signin
 module.exports.signin_post = [
   // Validation
-  body("username", "Username must be valid")
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
+  body("email", "Email must be valid").trim().isLength({ min: 1 }).escape(),
 
   // Get the user
   function (req, res, next) {
     const errors = validationResult(req);
     // There are errors
     if (!errors.isEmpty()) {
-      return next(errors);
+      return next(errors.array());
     }
     next();
   },
@@ -85,7 +82,7 @@ module.exports.account_detail = function (req, res, next) {
 // Create a new account
 module.exports.signup_post = [
   // Validation
-  body("username", "Username required").trim().isLength({ min: 3 }).escape(),
+  body("email", "Email required").trim().isLength({ min: 3 }).escape(),
 
   // Function to save a new user to the db
   function (req, res, next) {
@@ -95,16 +92,18 @@ module.exports.signup_post = [
     if (!errors.isEmpty()) {
       return next(err);
     }
+    const { first_name, last_name, email, password } = req.body;
     // Crypt password
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
       if (err) {
         return next(err);
       }
       // Create a new user
       const newUser = new User({
-        username: req.body.username,
+        first_name,
+        last_name,
+        email,
         password: hashedPassword,
-        email: req.body.email,
       });
       newUser.save(function (err) {
         if (err) {
