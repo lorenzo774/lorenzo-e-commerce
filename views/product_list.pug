@@ -9,6 +9,7 @@ block content
                 li.card.border.m-2.p-3.product-card
                     a(href=product.url) 
                         p #{product.name}
+                        h4 #{product.description}
                         //- If the product has an image display it
                         if product.image 
                             img.w-100(src=product.image)
