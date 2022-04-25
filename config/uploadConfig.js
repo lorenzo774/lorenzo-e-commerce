@@ -13,7 +13,7 @@ const picStorage = multer.diskStorage({
 });
 
 const productStorage = multer.diskStorage({
-  destination: "public/productUploads/",
+  destination: "public/product_uploads/",
   filename: function (req, file, cb) {
     cb(
       null,

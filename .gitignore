@@ -1,6 +1,6 @@
 node_modules
 public/uploads
-public/productUploads
+public/product_uploads
 package-lock.json
 .vscode
 .env
