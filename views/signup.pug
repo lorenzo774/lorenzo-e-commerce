@@ -1,22 +1,24 @@
 extends layout 
 
 block content 
-    h1= title
-    hr
-    form(action="", method="post", enctype="multipart/form-data")
-        label(for="first_name") First name
-        input.form-control(type="text", name="first_name" , placeholder="First name", required=true)
-        br
-        label(for="last_name") Last name
-        input.form-control(type="text", name="last_name" , placeholder="Last name", required=true)
-        br
-        label(for="email") Email
-        input.form-control(type="email", name="email", placeholder="email", required=true)
-        br
-        label(for="password") Password
-        input.form-control(type="password", name="password", placeholder="password", required=true)
-        br
-        label(for="profilePicture") Profile picture
-        input.form-control.upload(type="file", name="profilePicture")
-        br
-        button.btn.btn-primary(type="submit") Sign up
+    .d-flex.justify-content-center
+        div
+            h1= title
+            hr
+            form.w-100(action="", method="post", enctype="multipart/form-data")
+                label(for="first_name") First name
+                input.form-control(type="text", name="first_name" , placeholder="First name", required=true)
+                br
+                label(for="last_name") Last name
+                input.form-control(type="text", name="last_name" , placeholder="Last name", required=true)
+                br
+                label(for="email") Email
+                input.form-control(type="email", name="email", placeholder="email", required=true)
+                br
+                label(for="password") Password
+                input.form-control(type="password", name="password", placeholder="password", required=true)
+                br
+                label(for="profilePicture") Profile picture
+                input.form-control.upload(type="file", name="profilePicture")
+                br
+                button.btn.btn-primary.w-100(type="submit") Sign up

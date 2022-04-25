@@ -4,6 +4,8 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/bootstrap-dark.min.css")
+    //- Fontawesome
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' integrity='sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js')
     //- Favicon
     link(rel="icon" type="image/x-icon" href="/icon.ico")
@@ -38,3 +40,11 @@ html
       div.d-flex.justify-content-center
         div.mw-75.content-div
           block content
+
+    footer.text-center.text-lg-start.text-white(style='background-color: rgba(0, 0, 0, 0.2)')
+      hr.mb-2
+      section.mb-2.text-center
+        a.btn.m-3(href='https://github.com/lorenzo774/lorenzo-e-commerce' target="_blank" role='button')
+          i.display-4.fab.fa-github
+      .text-center.pb-4
+        | 2022, By Lorenzo774

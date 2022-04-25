@@ -13,6 +13,7 @@ a {
 
 .content-div {
   width: 100rem;
+  min-height: 70vh;
 }
 
 .product-card {
