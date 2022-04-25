@@ -12,7 +12,11 @@ a {
 }
 
 .content-div {
-  width: 30rem;
+  width: 100rem;
+}
+
+.product-card {
+  width: 20rem;
 }
 
 ul {

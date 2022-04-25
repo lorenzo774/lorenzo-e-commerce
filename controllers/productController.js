@@ -3,6 +3,8 @@ const CartItem = require("../models/cartItem");
 const Category = require("../models/category");
 const async = require("async");
 const { body, validationResult } = require("express-validator");
+// Upload for products image
+const { productUpload } = require("../config/uploadConfig");
 
 // Get the list of products
 module.exports.product_list = async function (req, res, next) {
@@ -90,11 +92,19 @@ module.exports.product_create_get = function (req, res, next) {
 
 // Create a new product
 module.exports.product_create_post = [
+  // Upload image
+  productUpload.single("image"),
+  // Validation
   body("name", "Name must be valid").trim().isLength({ min: 3 }).escape(),
   function (req, res, next) {
-    const { body } = req;
+    const { name, price, description, category } = req.body;
+    console.log(req.file);
     const newProduct = new Product({
-      ...body,
+      name,
+      price,
+      description,
+      category,
+      ...(req.file && { image: req.file.path.replace("public\\", "\\") }),
     });
     newProduct.save(function (err) {
       if (err) {

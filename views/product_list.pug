@@ -4,10 +4,15 @@ block content
     h1= title
     
     if products.length
-        ul
+        ul.d-flex.flex-wrap.justify-content-around
             each product in products 
-                li
-                    a(href=product.url) #{product.name}
+                li.card.border.m-2.p-3.product-card
+                    a(href=product.url) 
+                        p #{product.name}
+                        //- If the product has an image display it
+                        if product.image 
+                            img.w-100(src=product.image)
+                        h2 #{product.price} €
     else 
         p No Products
     

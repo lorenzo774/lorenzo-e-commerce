@@ -1,4 +1,4 @@
-const { fromJSTimeToLocale } = require("../helper");
+const { fromJSTimeToLocale } = require("../helpers/helper");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 

@@ -2,19 +2,9 @@ const { body, validationResult } = require("express-validator");
 const async = require("async");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
-// Setup multer
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: "public/uploads/",
-  filename: function (req, file, cb) {
-    console.log(req);
-    cb(
-      null,
-      `${new Date().toISOString().replace(/:/g, "-")}${file.originalname}`
-    );
-  },
-});
-const upload = multer({ storage: storage });
+// Multer instance with storage engine to upload profile pictures
+const { picUpload } = require("../config/uploadConfig");
+
 // Models
 const User = require("../models/user");
 const CartItem = require("../models/cartItem");
@@ -94,7 +84,7 @@ module.exports.account_detail = function (req, res, next) {
 // Create a new account
 module.exports.signup_post = [
   // Multer
-  upload.single("profilePicture"),
+  picUpload.single("profilePicture"),
 
   // Validation
   body("email", "Email required").trim().isLength({ min: 3 }).escape(),
@@ -119,7 +109,7 @@ module.exports.signup_post = [
         last_name,
         email,
         // Add the pic property only if there is a file uploaded
-        ...(req.file && { pic: req.file.path.replace("public\\", "") }),
+        ...(req.file && { pic: req.file.path.replace("public\\", "\\") }),
         password: hashedPassword,
       });
       newUser.save(function (err) {

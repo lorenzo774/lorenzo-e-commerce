@@ -2,7 +2,7 @@ extends layout
 
 block content
     p.display-3 Cart
-    ul
+    ul.d-flex.flex-wrap.justify-content-around
         each item in items 
             li 
                 div.card.p-4.d-flex.my-3
@@ -12,11 +12,11 @@ block content
 
     //- Buttons
     .text-center.mt-5
-        a.btn.btn-primary.w-100(href="/account/cart/create") Add a new item
+        a.btn.btn-primary.w-25(href="/account/cart/create") Add a new item
 
         br
 
         //- If there is at least 1 item, you can create an order
         if items.length
             br
-            a.btn.btn-success.w-100(href="/account/orders/create") Place an order
+            a.btn.btn-success.w-25(href="/account/orders/create") Place an order
