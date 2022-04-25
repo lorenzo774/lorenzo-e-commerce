@@ -104,7 +104,7 @@ module.exports.product_create_post = [
       price,
       description,
       category,
-      ...(req.file && { image: req.file.path.replace("public\\", "\\") }),
+      ...(req.file && { image: req.file.path.replace("public/", "") }),
     });
     newProduct.save(function (err) {
       if (err) {

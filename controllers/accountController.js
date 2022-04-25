@@ -109,7 +109,7 @@ module.exports.signup_post = [
         last_name,
         email,
         // Add the pic property only if there is a file uploaded
-        ...(req.file && { pic: req.file.path.replace("public\\", "\\") }),
+        ...(req.file && { pic: req.file.path.replace("public/", "") }),
         password: hashedPassword,
       });
       newUser.save(function (err) {
