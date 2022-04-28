@@ -5,6 +5,7 @@ const async = require("async");
 module.exports.index = async function (req, res, next) {
   if (req.user) {
     res.redirect("/account");
+    next();
   }
   async.parallel(
     {
