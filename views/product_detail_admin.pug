@@ -1,0 +1,24 @@
+extends layout 
+
+block content 
+    .d-flex
+        if product.image 
+            img.w-50.p-4(src=product.image)
+
+        .p-4
+            h1= product.name 
+            h3 #{product.description}
+
+            h3 #{product.price} €
+            h3 Category: #{product.category.name}
+
+            form(action=deleteUrl, method="post")
+                button.btn.btn-danger(name="product", value=product._id) Delete
+
+            if itemsToDelete 
+                h3 Delete the following items before attempting to delete the product 
+                
+                ul
+                    each item in itemsToDelete
+                        li
+                            a(href=item.deleteUrl) #{item.user.username} x#{item.quantity}

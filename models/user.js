@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   pic: String,
   email: { type: String, required: true },
+  admin: Boolean,
   phone: String,
 });
 

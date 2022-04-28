@@ -5,12 +5,19 @@ const async = require("async");
 const { body, validationResult } = require("express-validator");
 // Upload for products image
 const { productUpload } = require("../config/uploadConfig");
+const { isAdmin, viewRole } = require("../middlewares/auth");
+
+const getProducts = async () => await Product.find({});
 
 // Get the list of products
-module.exports.product_list = async function (req, res, next) {
-  const products = await Product.find();
-  res.render("product_list", { title: "Products", products });
-};
+module.exports.product_list = viewRole(
+  "product_list",
+  "product_list_admin",
+  async function () {
+    const products = await getProducts();
+    return { title: "Products", products };
+  }
+);
 
 // Get a single product by id
 module.exports.product_detail = function (req, res, next) {
@@ -25,7 +32,10 @@ module.exports.product_detail = function (req, res, next) {
       if (!product) {
         return next("Product not found");
       }
-      res.render("product_detail", {
+      const page = isAdmin(req.user)
+        ? "product_detail_admin"
+        : "product_detail";
+      res.render(page, {
         title: `Product: ${product.name}`,
         product,
         deleteUrl: `${product.url}/delete`,

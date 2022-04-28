@@ -4,3 +4,4 @@ public/product_uploads
 package-lock.json
 .vscode
 .env
+*.http
