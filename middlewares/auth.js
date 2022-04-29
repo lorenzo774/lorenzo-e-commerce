@@ -40,7 +40,12 @@ const viewRole = function (userPage, adminPage, data) {
     // View page
     const { admin } = req.user;
     const _data = await data(req, res, next);
-    res.render(admin ? adminPage : userPage, _data);
+
+    if (!req.user) {
+      res.render(userPage, _data);
+    } else {
+      res.render(admin ? adminPage : userPage, _data);
+    }
   };
 };
 
