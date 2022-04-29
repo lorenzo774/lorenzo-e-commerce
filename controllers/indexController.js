@@ -4,8 +4,9 @@ const async = require("async");
 
 module.exports.index = function (req, res, next) {
   if (req.user) {
-    res.redirect(`https://${req.hostname}/account`);
-    return next();
+    if (req.header("x-forwarded-proto") !== "https")
+      res.redirect(`https://${req.header("host")}/account`);
+    else next();
   }
   async.parallel(
     {
