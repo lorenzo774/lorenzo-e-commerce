@@ -5,7 +5,15 @@ const Category = require("../models/category");
 const Product = require("../models/product");
 
 // Handle roles
-const { viewRole } = require("../middlewares/auth");
+const { authError, viewRole } = require("../middlewares/auth");
+
+// Find by Products by category
+const getProductsByCategory = (res, name) =>
+  Category.findOne({ name })
+    .then((category) => {
+      return Product.find({ category: category.id });
+    })
+    .catch(() => authError(res, "Category not found"));
 
 const getCategories = async () => await Category.find({});
 
@@ -42,7 +50,7 @@ module.exports.category_create_post = [
     // No errors
     const { name, description } = req.body;
     const newCategory = new Category({
-      name,
+      name: name.toLowerCase(),
       description,
     });
     // Save the new category in the db
@@ -96,5 +104,17 @@ module.exports.category_delete_post = function (req, res, next) {
   );
 };
 
-// TODO Search by category
-module.exports.search_by_category = function (req, res, next) {};
+// Search by category
+module.exports.search_by_category = viewRole(
+  "product_list",
+  "product_list_admin",
+  async function (req, res, next) {
+    const { name } = req.params;
+    const products = await getProductsByCategory(res, name);
+    // Return
+    return {
+      title: `${name} products`,
+      products,
+    };
+  }
+);

@@ -19,4 +19,7 @@ router.post("/:id/delete", [
   categoryController.category_delete_post,
 ]);
 
+// Search by category
+router.get("/:name", categoryController.search_by_category);
+
 module.exports = router;

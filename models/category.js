@@ -13,4 +13,8 @@ CategorySchema.virtual("deleteUrl").get(function () {
   return `/categories/${this._id}/delete`;
 });
 
+CategorySchema.virtual("url").get(function () {
+  return `/categories/${this.name}`;
+});
+
 module.exports = mongoose.model("Category", CategorySchema);

@@ -10,4 +10,4 @@ block content
             h3 #{product.description}
 
             h3 #{product.price} €
-            h3 Category: #{product.category.name}
+            a(href=product.category.url) Category: #{product.category.name}

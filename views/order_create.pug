@@ -1,13 +1,15 @@
 extends layout 
 
 block content 
-    h1= title 
+    .d-flex.justify-content-center
+        div
+            h1= title 
 
-    h3 By #{user.fullname}
-    ul
-        each item in items 
-            li 
-                p #{item.product.name} x#{item.quantity}
-            
-    form(action="", method="post")
-        button(type="submit") Place 
+            h3 By #{user.fullname}
+            ul
+                each item in items 
+                    li 
+                        p #{item.product.name} x#{item.quantity}
+                    
+            form(action="", method="post")
+                button(type="submit") Place 

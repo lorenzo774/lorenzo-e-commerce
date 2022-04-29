@@ -1,26 +1,26 @@
 extends layout 
 
 block content 
-    h1 Add a new product 
-    hr
-    form(action="", method="post", enctype="multipart/form-data")
-        label(for="name") Name
-        input.form-control(type="text", name="name", placeholder="name")
-        br
-        label(for="price") Price
-        input.form-control(type="number", name="price", placeholder="price")
-        br
-        label(for="description") Description
-        input.form-control(type="text", name="description", placeholder="description")
-        br
-        label(for="category") Category
-        select.form-control(type="select", name="category")
-            each category in categories 
-                option(value=category._id) #{category.name}
-        br
-        label(for="image") Image
-        input.form-control(type="file", name="image", placeholder="description")
-        
-        br
-
-        button.btn.btn-primary.w-100(type="submit") Add 
+    .d-flex.justify-content-center
+        div
+            h1 Add a new product 
+            hr
+            form(action="", method="post", enctype="multipart/form-data")
+                label(for="name") Name
+                input.form-control(type="text", name="name", placeholder="name")
+                br
+                label(for="price") Price
+                input.form-control(type="number", name="price", placeholder="price")
+                br
+                label(for="description") Description
+                input.form-control(type="text", name="description", placeholder="description")
+                br
+                label(for="category") Category
+                select.form-control(type="select", name="category")
+                    each category in categories 
+                        option(value=category._id) #{category.name}
+                br
+                label(for="image") Image
+                input.form-control(type="file", name="image", placeholder="description")
+                br
+                button.btn.btn-primary.w-100(type="submit") Add 

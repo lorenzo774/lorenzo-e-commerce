@@ -43,12 +43,13 @@ const viewRole = function (userPage, adminPage, data) {
 
     // View page
     const { admin } = req.user;
-    const _data = await data();
+    const _data = await data(req, res, next);
     res.render(admin ? adminPage : userPage, _data);
   };
 };
 
 module.exports = {
+  authError,
   authUser,
   isAdmin,
   authAdmin,
