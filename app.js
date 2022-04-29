@@ -113,15 +113,6 @@ app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 
 // require https
-app.use((req, res, next) => {
-  if (
-    req.hostname !== "localhost" &&
-    req.get("X-Forwarded-Proto") !== "https"
-  ) {
-    return res.redirect(`https://${req.hostname}${req.url}`);
-  }
-  return next();
-});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
