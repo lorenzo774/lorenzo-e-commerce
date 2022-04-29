@@ -112,8 +112,6 @@ app.use("/account", accountRuoter);
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 
-// require https
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

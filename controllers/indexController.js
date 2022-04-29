@@ -3,10 +3,6 @@ const Product = require("../models/product");
 const async = require("async");
 
 module.exports.index = function (req, res, next) {
-  if (req.user) {
-    res.redirect(`/account`);
-    next();
-  }
   async.parallel(
     {
       users_count: function (callback) {
