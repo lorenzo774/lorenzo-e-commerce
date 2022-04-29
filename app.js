@@ -11,7 +11,6 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const sslRedirect = require("heroku-ssl-redirect");
 
 // Ruoters
 const indexRouter = require("./routes/index");
@@ -50,7 +49,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(sslRedirect());
 
 passport.use(
   new LocalStrategy(
