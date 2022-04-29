@@ -1,5 +1,9 @@
 # Lorenzo-e-commerce
 
+## Live preview
+
+[Heroku app](https://lorenzo-e-commerce.herokuapp.com)
+
 ## Technologies
 
 Made with Express, MongoDB and Passport.
