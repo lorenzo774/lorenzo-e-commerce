@@ -99,30 +99,30 @@ module.exports.signup_post = [
     }
     const { first_name, last_name, email, password } = req.body;
     if (User.find({ email })) {
-      next("Email already taken");
-    }
-
-    // Crypt password
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
-      if (err) {
-        return next(err);
-      }
-      // No errors
-      const newUser = new User({
-        first_name,
-        last_name,
-        email,
-        // Add the pic property only if there is a file uploaded
-        ...(req.file && { pic: req.file.path.replace("public/", "/") }),
-        password: hashedPassword,
-      });
-      newUser.save(function (err) {
+      res.send("Email already taken");
+    } else {
+      // Crypt password
+      bcrypt.hash(password, 10, (err, hashedPassword) => {
         if (err) {
           return next(err);
         }
-        res.redirect("/account/signin");
+        // No errors
+        const newUser = new User({
+          first_name,
+          last_name,
+          email,
+          // Add the pic property only if there is a file uploaded
+          ...(req.file && { pic: req.file.path.replace("public/", "/") }),
+          password: hashedPassword,
+        });
+        newUser.save(function (err) {
+          if (err) {
+            return next(err);
+          }
+          res.redirect("/account/signin");
+        });
       });
-    });
+    }
   },
 ];
 
