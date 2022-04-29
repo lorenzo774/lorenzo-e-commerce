@@ -98,6 +98,10 @@ module.exports.signup_post = [
       return next(err);
     }
     const { first_name, last_name, email, password } = req.body;
+    if (User.find({ email })) {
+      next("Email already taken");
+    }
+
     // Crypt password
     bcrypt.hash(password, 10, (err, hashedPassword) => {
       if (err) {
