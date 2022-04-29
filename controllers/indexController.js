@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Product = require("../models/product");
 const async = require("async");
 
-module.exports.index = async function (req, res, next) {
+module.exports.index = function (req, res, next) {
   if (req.user) {
     res.redirect("/account");
     return next();
