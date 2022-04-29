@@ -7,9 +7,5 @@ block content
             li 
                 div.flex-50
                     p #{category.name}
-                    form(action=category.deleteUrl, method="post") 
-                        button.btn.btn-danger(type="submit") Remove 
         else 
             li Not found
-    a(href="/categories/create") Add a new category
-

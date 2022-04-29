@@ -1,10 +1,14 @@
 extends layout 
 
 block content 
-    h1= title 
-    form(action="", method="post")
-        input(type="text", name="name", placeholder="Name", required=true)
-        br
-        input(type="text", name="description", placeholder="Description", required=true)
-        br
-        button(type="submit") Add
+    .d-flex.justify-content-center
+        div
+            h1= title 
+            form(action="", method="post")
+                label(for="name") Name
+                input.form-control(type="text", name="name", placeholder="Name", required=true)
+                br
+                label(for="description") Description
+                input.form-control(type="text", name="description", placeholder="Description", required=true)
+                br
+                button.btn.btn-primary.w-100(type="submit") Add

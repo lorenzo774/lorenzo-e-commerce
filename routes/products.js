@@ -4,10 +4,10 @@ const router = express.Router();
 // Controllerr
 const productController = require("../controllers/productController");
 
-const { authUser, authAdmin } = require("../middlewares/auth");
+const { authAdmin } = require("../middlewares/auth");
 
 // Get list
-router.get("/", [authUser, productController.product_list]);
+router.get("/", productController.product_list);
 
 // Create
 router.get("/create", [authAdmin, productController.product_create_get]);

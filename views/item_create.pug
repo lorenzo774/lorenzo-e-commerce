@@ -1,22 +1,24 @@
 extends layout 
 
 block content 
-    h1= title 
-    form(action="", method="post") 
-        label(for="product") Product:
-        select(type="select", name="product", required=true)
-            each product in products 
-                option(value=product._id) #{product.name}
-        br
-        br
-        label(for="quantity") Quantity:
-        input(type="number", name="quantity", required=true) 
+    .d-flex.justify-content-center
+        div
+            h1= title 
+            form(action="", method="post") 
+                label(for="product") Product:
+                select.form-control(type="select", name="product", required=true)
+                    each product in products 
+                        option(value=product._id) #{product.name}
+                br
+                br
+                label(for="quantity") Quantity:
+                input.form-control(type="number", name="quantity", required=true) 
 
-        if errors
-            ul
-                each error in errors
-                    li= error.msg
+                if errors
+                    ul
+                        each error in errors
+                            li= error.msg
 
-        br
-        br
-        button(type="submit") Add
+                br
+                br
+                button.btn.btn-primary.w-100(type="submit") Add

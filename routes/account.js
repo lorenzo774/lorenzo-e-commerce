@@ -6,6 +6,9 @@ const accountController = require("../controllers/accountController");
 const cartController = require("../controllers/cartController");
 const orderController = require("../controllers/orderController");
 
+// Authorize only users who sign in
+const { authUser } = require("../middlewares/auth");
+
 // Sign up to the website
 router.get("/signup", accountController.signup_get);
 router.post("/signup", accountController.signup_post);
@@ -13,22 +16,28 @@ router.post("/signup", accountController.signup_post);
 router.get("/signin", accountController.signin_get);
 router.post("/signin", accountController.signin_post);
 // Log out
-router.get("/logout", accountController.log_out);
+router.get("/logout", [authUser, accountController.log_out]);
 
 // Get account info
-router.get("/", accountController.account_detail);
+router.get("/", [authUser, accountController.account_detail]);
 
 // Get cart
-router.get("/cart", cartController.cart_list);
+router.get("/cart", [cartController.cart_list]);
 // Create
-router.get("/cart/create", cartController.item_create_get);
-router.post("/cart/create", cartController.item_create_post);
+router.get("/cart/create", [authUser, cartController.item_create_get]);
+router.post("/cart/create", [authUser, cartController.item_create_post]);
 // Update
-router.get("/cart/:itemId/update", cartController.item_update_get);
-router.post("/cart/:itemId/update", cartController.item_update_post);
+router.get("/cart/:itemId/update", [authUser, cartController.item_update_get]);
+router.post("/cart/:itemId/update", [
+  authUser,
+  cartController.item_update_post,
+]);
 // Delete
-router.get("/cart/:itemId/delete", cartController.item_delete_get);
-router.post("/cart/:itemId/delete", cartController.item_delete_post);
+router.get("/cart/:itemId/delete", [authUser, cartController.item_delete_get]);
+router.post("/cart/:itemId/delete", [
+  authUser,
+  cartController.item_delete_post,
+]);
 
 // Purchase
 // Get list

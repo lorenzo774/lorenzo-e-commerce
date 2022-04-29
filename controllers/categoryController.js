@@ -4,11 +4,23 @@ const { body, validationResult } = require("express-validator");
 const Category = require("../models/category");
 const Product = require("../models/product");
 
+// Handle roles
+const { viewRole } = require("../middlewares/auth");
+
+const getCategories = async () => await Category.find({});
+
 // Get the list
-module.exports.category_list = async function (req, res, next) {
-  const categories = await Category.find();
-  res.render("category_list", { title: "Category list", categories });
-};
+module.exports.category_list = viewRole(
+  "category_list",
+  "category_list_admin",
+  async function () {
+    const categories = await getCategories();
+    return {
+      title: "Categories",
+      categories,
+    };
+  }
+);
 
 // Get the create page
 module.exports.category_create_get = function (req, res, next) {
@@ -83,3 +95,6 @@ module.exports.category_delete_post = function (req, res, next) {
     }
   );
 };
+
+// TODO Search by category
+module.exports.search_by_category = function (req, res, next) {};
