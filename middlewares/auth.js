@@ -37,15 +37,14 @@ const isAdmin = function (user) {
 const viewRole = function (userPage, adminPage, data) {
   // Middleware returned
   return async function (req, res, next) {
+    if (!req.user) {
+      return authError(res, "You first need to sign in");
+    }
+
     // View page
     const { admin } = req.user;
     const _data = await data(req, res, next);
-
-    if (!req.user) {
-      res.render(userPage, _data);
-    } else {
-      res.render(admin ? adminPage : userPage, _data);
-    }
+    res.render(admin ? adminPage : userPage, _data);
   };
 };
 
